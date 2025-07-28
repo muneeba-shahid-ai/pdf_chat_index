@@ -14,6 +14,7 @@ load_dotenv()
 # Initialize Pinecone
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+INDEX_NAME = "pdf-chat-index"
 
 def create_index(INDEX_NAME):
     existing_indexes = [index.name for index in pc.list_indexes()] if pc.list_indexes() else []
@@ -70,7 +71,6 @@ def main():
     st.info("Ask questions about the provided PDF document. Type 'exit' to end the chat.")
     pdf_file = st.file_uploader("Upload PDF", type="pdf")
     if pdf_file:
-        INDEX_NAME = f"pdf-index-{os.path.splitext(pdf_file.name)[0].replace(' ', '_').lower()}"
         with st.spinner("Processing PDF..."):
             chunks = process_pdf(pdf_file)
             st.success(f"Extracted {len(chunks)} text chunks")
