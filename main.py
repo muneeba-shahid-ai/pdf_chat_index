@@ -14,7 +14,7 @@ load_dotenv()
 # Initialize Pinecone
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-INDEX_NAME = "pdf-chat-index"
+INDEX_NAME = "pdf-chatbot-index"
 
 def create_index(INDEX_NAME):
     existing_indexes = [index.name for index in pc.list_indexes()] if pc.list_indexes() else []
